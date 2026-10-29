@@ -11,17 +11,30 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.gabrielstocco.meuslistatarefas",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
+
       "predictiveBackGestureEnabled": false
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": ["expo-router", "expo-sqlite", "expo-status-bar"]
+    "plugins": [
+      "expo-router",
+      "expo-sqlite",
+      "expo-status-bar",
+      "expo-web-browser"
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "93790e35-a7fa-4485-9a8b-c2630a079510"
+      }
+    }
   }
 }

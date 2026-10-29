@@ -9,19 +9,14 @@ import {
 import { useRouter, Stack } from "expo-router";
 
 import { useTasks } from "../src/hooks/useTasks";
-
+import { useAuthContext } from "../src/contexts/AuthContext";
 import { TaskItem } from "../src/components/TaskItem";
 import { FilterBar } from "../src/components/FilterBar";
 import { EmptyState } from "../src/components/EmptyState";
 
-/**
- * Tela principal com a lista de tarefas.
- *
- * Toda a lógica de negócio (carregar, filtrar, toggle, deletar) está
- * encapsulada no hook `useTasks`. Este componente só cuida da UI.
- */
 export default function HomeScreen() {
   const router = useRouter();
+  const { signOut } = useAuthContext();
 
   // Desestrutura tudo que o hook expõe — veja src/hooks/useTasks.ts
   const {
@@ -36,6 +31,10 @@ export default function HomeScreen() {
     removeTask,
   } = useTasks();
 
+  /**
+   * Enquanto os dados estão sendo buscados do SQLite, exibimos um spinner.
+
+   */
   if (loading) {
     return (
       <View className="flex-1 items-center justify-center bg-gray-50">
@@ -49,7 +48,6 @@ export default function HomeScreen() {
 
   return (
     <>
-      {}
       <Stack.Screen
         options={{
           headerRight: () => (
@@ -65,6 +63,7 @@ export default function HomeScreen() {
 
               {/* Botão de Logout */}
               <TouchableOpacity
+                onPress={signOut}
                 accessibilityLabel="Sair"
                 accessibilityRole="button"
               >
@@ -86,8 +85,6 @@ export default function HomeScreen() {
           onFilterChange={setFilter}
         />
 
-        {/* ── LISTA DE TAREFAS ──────────────────────────────────────── */}
-        {}
         <FlatList
           data={tasks}
           keyExtractor={(item) => String(item.id)}
@@ -105,8 +102,6 @@ export default function HomeScreen() {
           showsVerticalScrollIndicator={false}
         />
 
-        {/* ── FAB — BOTÃO FLUTUANTE DE ADICIONAR ───────────────────── */}
-        {}
         <TouchableOpacity
           onPress={() => router.push("/form")}
           className="absolute bottom-8 right-6 w-16 h-16 bg-indigo-600 rounded-full items-center justify-center shadow-lg"
